@@ -17,12 +17,20 @@ import {
   Sparkles,
   Cloud,
   Layout,
-  Database
+  Database,
+  FileText,
+  Download,
+  X,
+  Star,
+  Quote,
+  GraduationCap,
+  Briefcase
 } from 'lucide-react';
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [contactStatus, setContactStatus] = useState('idle');
 
@@ -83,6 +91,36 @@ export default function Home() {
       description: "Scalable cloud deployment leveraging serverless functions, container registries, and edge network delivery.",
       stack: ["Docker", "AWS / Cloud", "Node.js"],
       liveUrl: "#"
+    }
+  ];
+
+  const testimonials = [
+    {
+      id: 1,
+      name: "Alex Rivera",
+      role: "SaaS Founder & Agency Client",
+      type: "Agency Project",
+      comment: "Delivered our Next.js web portal refactor on schedule. API response times improved drastically, and the UI layout is crisp and accessible.",
+      rating: 5,
+      icon: Briefcase
+    },
+    {
+      id: 2,
+      name: "Hamza Malik",
+      role: "Backend Student / Mentee",
+      type: "Mentorship",
+      comment: "Clear, step-by-step guidance on Python FastAPI backend design, Docker containerization, and PostgreSQL schemas. Helped me crack complex engineering concepts.",
+      rating: 5,
+      icon: GraduationCap
+    },
+    {
+      id: 3,
+      name: "Elena Rostova",
+      role: "Full-Stack Engineer",
+      type: "Code Audit",
+      comment: "Extremely detailed code review and architecture check. Showed us exactly where our database query bottlenecks were occurring.",
+      rating: 5,
+      icon: Briefcase
     }
   ];
 
@@ -153,6 +191,7 @@ export default function Home() {
           <div className="flex items-center space-x-4 sm:space-x-6 text-sm font-semibold">
             <a href="#about" className="hover:opacity-80 transition-opacity hidden sm:block">About</a>
             <a href="#portfolio" className="hover:opacity-80 transition-opacity hidden sm:block">Projects</a>
+            <a href="#testimonials" className="hover:opacity-80 transition-opacity hidden sm:block">Reviews</a>
             <a href="#contact" className="hover:opacity-80 transition-opacity hidden sm:block">Contact</a>
 
             <button
@@ -191,20 +230,20 @@ export default function Home() {
                 : 'bg-blue-50 border-blue-200 text-blue-700'
             }`}>
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Available for Full-Stack Projects</span>
+              <span>Available for Full-Stack Projects & Mentorship</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
               Full-Stack Engineer & <span className={`text-transparent bg-clip-text bg-gradient-to-r ${
                 isDarkMode ? 'from-emerald-400 to-teal-300' : 'from-blue-600 to-indigo-600'
-              }`}>Web Specialist</span>
+              }`}>Technical Instructor</span>
             </h1>
             
             <p className={`text-lg max-w-2xl leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-slate-600'}`}>
-              Building production-ready web applications, performant REST APIs, and scalable cloud deployments.
+              Building production-ready web applications, performant REST APIs, scalable cloud infrastructure, and mentoring software developers.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-wrap gap-3 pt-2">
               <a 
                 href="#portfolio" 
                 className={`inline-flex items-center justify-center space-x-2 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all ${
@@ -216,16 +255,19 @@ export default function Home() {
                 <span>Explore Projects</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a 
-                href="#contact" 
-                className={`inline-flex items-center justify-center border font-bold px-6 py-3.5 rounded-xl transition-all ${
+
+              {/* Resume Modal Trigger Button */}
+              <button
+                onClick={() => setIsResumeOpen(true)}
+                className={`inline-flex items-center justify-center space-x-2 border font-bold px-5 py-3.5 rounded-xl transition-all ${
                   isDarkMode 
-                    ? 'bg-zinc-900 hover:bg-zinc-800 border-zinc-800 text-zinc-300' 
+                    ? 'bg-zinc-900 hover:bg-zinc-800 border-zinc-800 text-zinc-200' 
                     : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
                 }`}
               >
-                Send Message
-              </a>
+                <FileText className="h-4 w-4 text-blue-500" />
+                <span>View CV / Resume</span>
+              </button>
             </div>
 
             <div className={`pt-6 flex flex-wrap items-center gap-6 text-xs font-medium border-t ${
@@ -298,7 +340,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Category Filter Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             {[
               { id: 'all', label: 'All Projects', icon: Code2 },
@@ -329,7 +370,6 @@ export default function Home() {
             })}
           </div>
 
-          {/* Projects Grid */}
           <div className="grid md:grid-cols-3 gap-8 pt-4">
             {filteredProjects.map((project) => (
               <div 
@@ -381,8 +421,73 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Direct Contact Section (Direct to Gmail via Formspree) */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-xl mx-auto">
+      {/* Client Recommendations & Mentorship Testimonials Section */}
+      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="space-y-10">
+          <div className="text-center space-y-3">
+            <div className={`inline-flex items-center space-x-2 border rounded-full px-3.5 py-1 text-xs font-semibold ${
+              isDarkMode 
+                ? 'bg-emerald-950/60 border-emerald-800/50 text-emerald-300' 
+                : 'bg-blue-50 border-blue-200 text-blue-700'
+            }`}>
+              <Quote className="h-3.5 w-3.5" />
+              <span>Social Proof & Endorsements</span>
+            </div>
+            <h2 className="text-3xl font-extrabold">Client & Mentorship Feedback</h2>
+            <p className={`text-sm max-w-xl mx-auto font-medium ${isDarkMode ? 'text-zinc-400' : 'text-slate-600'}`}>
+              Endorsements from software agency clients, code review participants, and students.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((item) => {
+              const IconComp = item.icon;
+              return (
+                <div 
+                  key={item.id}
+                  className={`border rounded-2xl p-6 flex flex-col justify-between space-y-4 shadow-md transition-all ${
+                    isDarkMode 
+                      ? 'bg-zinc-900 border-zinc-800' 
+                      : 'bg-white border-slate-200/80 shadow-slate-200/50'
+                  }`}
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex text-amber-400 space-x-1">
+                        {[...Array(item.rating)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 fill-current" />
+                        ))}
+                      </div>
+                      <span className={`text-[10px] font-extrabold uppercase tracking-wider border px-2 py-0.5 rounded-md inline-flex items-center space-x-1 ${
+                        isDarkMode 
+                          ? 'bg-zinc-950 border-zinc-800 text-emerald-400' 
+                          : 'bg-slate-100 border-slate-200 text-blue-600'
+                      }`}>
+                        <IconComp className="h-3 w-3 mr-1" />
+                        <span>{item.type}</span>
+                      </span>
+                    </div>
+
+                    <p className={`text-xs leading-relaxed italic ${isDarkMode ? 'text-zinc-300' : 'text-slate-600'}`}>
+                      "{item.comment}"
+                    </p>
+                  </div>
+
+                  <div className={`pt-4 border-t ${isDarkMode ? 'border-zinc-800' : 'border-slate-100'}`}>
+                    <h4 className="font-bold text-sm">{item.name}</h4>
+                    <p className={`text-xs font-medium ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}>{item.role}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Direct Contact Section */}
+      <section id="contact" className={`py-20 border-t px-4 sm:px-6 lg:px-8 max-w-xl mx-auto transition-colors ${
+        isDarkMode ? 'border-zinc-900' : 'border-slate-200'
+      }`}>
         <div className="text-center space-y-2 mb-8">
           <h2 className="text-3xl font-extrabold">Send a Message</h2>
           <p className={`text-sm font-medium ${isDarkMode ? 'text-zinc-400' : 'text-slate-600'}`}>
@@ -486,6 +591,72 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* Resume Preview Modal */}
+      {isResumeOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className={`relative w-full max-w-2xl border rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto ${
+            isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+          }`}>
+            <div className="flex items-center justify-between border-b pb-4 border-slate-200 dark:border-zinc-800">
+              <div className="flex items-center space-x-2">
+                <FileText className="h-5 w-5 text-blue-500" />
+                <h3 className="font-bold text-lg">Curriculum Vitae / Resume</h3>
+              </div>
+              <button 
+                onClick={() => setIsResumeOpen(false)}
+                className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Resume Content Summary */}
+            <div className="space-y-4 text-xs leading-relaxed">
+              <div className="space-y-1">
+                <h4 className="font-bold text-sm text-blue-500">Full-Stack Software Engineer</h4>
+                <p className="font-medium opacity-80">Specializing in Python Backend Systems, Next.js, and Cloud Infrastructure</p>
+              </div>
+
+              <div className="border-t pt-3 space-y-2 border-slate-100 dark:border-zinc-800">
+                <h5 className="font-bold uppercase tracking-wider text-[10px] opacity-60">Technical Summary</h5>
+                <p>• Experienced in architecting RESTful APIs with Python FastAPI and Node.js.</p>
+                <p>• Proficient in modern frontend development using React, Next.js App Router, and Tailwind CSS.</p>
+                <p>• Hands-on experience with Docker containerization, Kubernetes orchestration, and PostgreSQL database optimization.</p>
+              </div>
+
+              <div className="border-t pt-3 space-y-2 border-slate-100 dark:border-zinc-800">
+                <h5 className="font-bold uppercase tracking-wider text-[10px] opacity-60">Core Competencies</h5>
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {['Python', 'FastAPI', 'Next.js', 'React', 'PostgreSQL', 'Docker', 'Kubernetes', 'Tailwind CSS'].map((s, idx) => (
+                    <span key={idx} className="bg-slate-100 dark:bg-zinc-800 px-2.5 py-1 rounded-md font-semibold text-[10px]">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="pt-4 border-t border-slate-200 dark:border-zinc-800 flex flex-col sm:flex-row justify-end gap-3">
+              <button
+                onClick={() => setIsResumeOpen(false)}
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold border border-slate-300 dark:border-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+              >
+                Close Preview
+              </button>
+              <a
+                href="/resume.pdf"
+                download="Developer_Resume.pdf"
+                className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-md"
+              >
+                <Download className="h-3.5 w-3.5" />
+                <span>Download PDF Resume</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className={`border-t py-8 text-center text-xs font-medium transition-colors ${
